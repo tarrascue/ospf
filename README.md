@@ -53,19 +53,6 @@
 |---|---|---|---|:---:|---|
 |192.168.10.4/30|192.168.10.9|192.168.10.10|192.168.10.11|2|255.255.255.252|
 
-В [Vagrantfile](Vagrantfile) добавляем опции ядра для роутинга:
-
-```
-net.ipv4.ip_forward=1
-net.ipv4.conf.all.forwarding=1
-net.ipv4.conf.all.rp_filter=0
-```
-
-Для корректной работы `vtysh` при включенном SELinux разрешаем Quagga запись в конфиги:
-```
-setsebool -P zebra_write_config 1
-```
-
 Конфигуруем интерфейсы через shell porvision vagrnat, устанавливаем `Quagga`. Добавляем на каждый роутер конфигурацию Quagga [daemons](etc/daemons), ospfd.conf для [router1](router1/ospfd.conf), [router2](router2/ospfd.conf), [router3](router3/ospfd.conf) и zebra.conf для [router1](router1/zebra.conf), [router2](router2/zebra.conf), [router3](router3/zebra.conf). Включаем и запускаем службы `zebra` и `ospfd`. Добавляем так же записи в [hosts](etc/hosts).
 
 ### 2. OSPF между машинами на базе Quagga
